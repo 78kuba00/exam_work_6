@@ -37,3 +37,14 @@ def create_view(request, *args, **kwargs):
         # return HttpResponseRedirect(f'/task/{new_task.pk}/')
         # return render(request, 'task_view.html', {'task': new_task})
         # return redirect('index', pk=new_comment.pk)
+
+def edit_view(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method == "GET":
+        return render(request, 'edit.html', {'comment': comment, 'statuses': STATUS_CHOICES})
+    elif request.method == "POST":
+        comment.author = request.POST.get('author')
+        comment.email = request.POST.get('email')
+        comment.message = request.POST.get('message')
+        comment.save()
+        return redirect('index', pk=comment.pk)
