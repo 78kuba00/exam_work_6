@@ -41,8 +41,14 @@ def create_view(request, *args, **kwargs):
             errors['email'] = 'Почта не может быть пустым'
         elif len(email) > 50:
             errors['email'] = 'Почта не можеть быть длиннее 50 символов'
-        new_comment = Comment.objects.create(author=author, email=email, message=message, status=status)
-        url = reverse('index', kwargs={'pk':new_comment.pk})
+        new_comment = Comment(
+            author=author,
+            email=email,
+            message=message,
+        )
+        new_comment.save()
+        # new_comment = Comment.objects.create(author=author, email=email, message=message, status=status)
+        url = reverse('index')
         return HttpResponseRedirect(url)
         # return HttpResponseRedirect(f'/task/{new_task.pk}/')
         # return render(request, 'task_view.html', {'task': new_task})
@@ -59,11 +65,15 @@ def edit_view(request, pk):
         comment.save()
         return redirect('index')
 
+# def delete_view(request, pk):
+#     comment = get_object_or_404(Comment, pk=pk)
+#     if request.method =="GET":
+#         comment.delete()
+#         return render(request, 'delete.html', {'comment': comment})
+#     elif request.method =="POST":
+#         comment.delete()
+#         return redirect('index')
+
 def delete_view(request, pk):
-    comment = get_object_or_404(Comment, pk=pk)
-    if request.method =="GET":
-        comment.delete()
-        return render(request, 'delete.html', {'comment': comment})
-    elif request.method =="POST":
-        comment.delete()
-        return redirect('index')
+    Comment.objects.filter(pk=pk).delete()
+    return redirect('index')

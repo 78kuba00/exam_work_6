@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', index_view, name='index'),
     path('comment/add/', create_view, name='create'),
-    path('comment/<int:pk>/edit', edit_view, name='edit'),
-    path('comment/<int:pk>/delete', delete_view, name='delete')
+    path('edit/<int:pk>', edit_view, name='edit'),
+    path('delete/<int:pk>', delete_view, name='delete')
 ]
