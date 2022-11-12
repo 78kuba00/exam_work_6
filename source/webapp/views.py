@@ -48,3 +48,11 @@ def edit_view(request, pk):
         comment.message = request.POST.get('message')
         comment.save()
         return redirect('index', pk=comment.pk)
+
+def delete_view(request, pk):
+    comment = get_object_or_404(Comment, pk=pk)
+    if request.method =="GET":
+        return render(request, 'delete.html', {'comment': comment})
+    elif request.method =="POST":
+        comment.delete()
+        return redirect('index')
