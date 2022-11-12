@@ -1,0 +1,24 @@
+{% csrf_token %}
+
+        <label class="form-label">Author:</label>
+        <input class="form-control" type="text" name="author" value="{{ comment.author }}" required>
+        <br/>
+        <label class="form-label">E-mail:</label>
+        <textarea class="form-control" name="email">{{ comment.email }}</textarea>
+        <br/>
+         <label class="form-label">Message:</label>
+        <input class="form-control" type="text" name="message" value="{{ comment.message }}">
+        <br/>
+        <label class="form-label">Статус:</label>
+        <select class="form-select" name="status">
+            {% for value, status in statuses %}
+                <option
+                    {% if comment.status == value %}
+                        selected
+                    {% endif %}
+                        value="{{ value }}">{{ status }}</option>
+            {% endfor %}
+        </select>
+        <br/>
+    <input class="btn btn-success" type="submit" value="{{ button_text }}">
+</html>
