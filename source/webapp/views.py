@@ -77,3 +77,9 @@ def edit_view(request, pk):
 def delete_view(request, pk):
     Comment.objects.filter(pk=pk).delete()
     return redirect('index')
+
+# def search_view(request):
+#     if request.method == "GET":
+#         name = request.GET.get('name')
+#         memo = Comment.objects.filter(author__icontains=name)
+#         return render(request, 'search.html', {'memos': memo})

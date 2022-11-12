@@ -22,5 +22,5 @@ urlpatterns = [
     path('', index_view, name='index'),
     path('comment/add/', create_view, name='create'),
     path('edit/<int:pk>', edit_view, name='edit'),
-    path('delete/<int:pk>', delete_view, name='delete')
+    path('delete/<int:pk>', delete_view, name='delete'),
 ]
