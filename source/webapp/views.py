@@ -9,6 +9,16 @@ def index_view(request, *args, **kwargs):
         'comments': comments
     }
     return render(request, "index.html", context)
+    # if request.method == "POST":
+    #     comment_id = request.GET.get('id')
+    #     comment = Comment.objects.get(id=comment_id)
+    #     comment.delete()
+    #     return redirect('index')
+    # comments = Comment.objects.all()
+    # # url = reverse('index', kwargs={tasks})
+    # # print(url)
+    # # return HttpResponseRedirect(url)
+    # return render(request, 'index.html', {'coments': comments})
 
 def create_view(request, *args, **kwargs):
     if request.method == "GET":
@@ -47,11 +57,12 @@ def edit_view(request, pk):
         comment.email = request.POST.get('email')
         comment.message = request.POST.get('message')
         comment.save()
-        return redirect('index', pk=comment.pk)
+        return redirect('index')
 
 def delete_view(request, pk):
     comment = get_object_or_404(Comment, pk=pk)
     if request.method =="GET":
+        comment.delete()
         return render(request, 'delete.html', {'comment': comment})
     elif request.method =="POST":
         comment.delete()
